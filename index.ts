@@ -7,6 +7,20 @@ import { ExpressAdapter } from 'ask-sdk-express-adapter';
 // Create a Skill Builder
 const skillBuilder = SkillBuilders.custom();
 
+const LaunchRequestHandler = {
+    canHandle(handlerInput: any) {
+        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+    },
+    handle(handlerInput: any) {
+        const speechText = 'Welcome to the skill, you can say Hello!';
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .reprompt(speechText)
+            .getResponse();
+    }
+};
+
 // Create a Request Handler for the HelloWorldIntent
 const HelloWorldRequestHandler = {
     canHandle(handlerInput: any) {
@@ -28,7 +42,8 @@ const port = process.env.PORT;
 
 // Add the Request Handler to the Skill Builder
 skillBuilder.addRequestHandlers(
-    HelloWorldRequestHandler
+    HelloWorldRequestHandler,
+    LaunchRequestHandler
 );
 
 // Create an Express Adapter
@@ -40,4 +55,4 @@ const server = express();
 server.post('/', adapter.getRequestHandlers());
 
 // Start the server
-server.listen(port, () => console.log('Alexa skill server started on port 3000.'));
+server.listen(port, () => console.log(`Alexa skill server started on port ${port}.`));
