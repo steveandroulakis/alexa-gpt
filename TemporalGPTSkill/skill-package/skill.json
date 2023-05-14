@@ -21,13 +21,13 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "uri": "https://0723-172-92-149-28.ngrok-free.app",
+          "uri": "https://3d6a-172-92-149-28.ngrok-free.app",
           "sslCertificateType": "Wildcard"
         },
         "regions": {
           "EU": {
             "endpoint": {
-              "uri": "https://0723-172-92-149-28.ngrok-free.app",
+              "uri": "https://3d6a-172-92-149-28.ngrok-free.app",
               "sslCertificateType": "Trusted"
             }
           }

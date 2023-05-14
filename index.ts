@@ -12,7 +12,7 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput: any) {
-        const speechText = 'Welcome to the skill, you can say Hello!';
+        const speechText = 'Talk to me';
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -21,17 +21,24 @@ const LaunchRequestHandler = {
     }
 };
 
-// Create a Request Handler for the HelloWorldIntent
-const HelloWorldRequestHandler = {
+// Create a Request Handler for ChatGPTIntent
+const ChatGPTIntent = {
     canHandle(handlerInput: any) {
         return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-            && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
+            && handlerInput.requestEnvelope.request.intent.name === 'ChatGPTIntent';
     },
     handle(handlerInput: any) {
-        const speechText = 'Hello, World!';
+        
+        // get 'count' session attribute or set it to 0
+        let count = handlerInput.attributesManager.getSessionAttributes().count || 0;
+        count += 1;
+        handlerInput.attributesManager.setSessionAttributes({ count });
+
+        const speechText = `Hello, World ${count}!`;
 
         return handlerInput.responseBuilder
             .speak(speechText)
+            .reprompt(speechText)
             .getResponse();
     }
 };
@@ -42,7 +49,7 @@ const port = process.env.PORT;
 
 // Add the Request Handler to the Skill Builder
 skillBuilder.addRequestHandlers(
-    HelloWorldRequestHandler,
+    ChatGPTIntent,
     LaunchRequestHandler
 );
 

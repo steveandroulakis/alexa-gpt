@@ -16,16 +16,20 @@
                     "samples": []
                 },
                 {
-                    "name": "HelloWorldIntent",
-                    "slots": [],
+                    "name": "ChatGPTIntent",
+                    "slots": [
+                        {
+                            "name": "question",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
                     "samples": [
-                        "hello",
-                        "how are you",
-                        "say hi world",
-                        "say hi",
-                        "hi",
-                        "say hello world",
-                        "say hello"
+                        "what is {question}",
+                        "ask {question}",
+                        "how {question}",
+                        "why {question}",
+                        "tell me {question}",
+                        "give me {question}"
                     ]
                 },
                 {
