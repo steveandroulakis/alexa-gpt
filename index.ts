@@ -1,16 +1,43 @@
 import * as dotenv from "dotenv";
-const express = require('express')
+const express = require('express');
+import { SkillBuilders } from 'ask-sdk-core';
+import { RequestEnvelope, ResponseEnvelope } from 'ask-sdk-model';
+import { ExpressAdapter } from 'ask-sdk-express-adapter';
 
-const app = express();
+// Create a Skill Builder
+const skillBuilder = SkillBuilders.custom();
+
+// Create a Request Handler for the HelloWorldIntent
+const HelloWorldRequestHandler = {
+    canHandle(handlerInput: any) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
+    },
+    handle(handlerInput: any) {
+        const speechText = 'Hello, World!';
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .getResponse();
+    }
+};
 
 dotenv.config();
 
 const port = process.env.PORT;
 
-app.get('/', (req, res) => {
-    res.send('OK STEVE!')
-})
+// Add the Request Handler to the Skill Builder
+skillBuilder.addRequestHandlers(
+    HelloWorldRequestHandler
+);
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+// Create an Express Adapter
+const skill = skillBuilder.create();
+const adapter = new ExpressAdapter(skill, true, true);
+
+// Create an Express server and route incoming requests to the adapter
+const server = express();
+server.post('/', adapter.getRequestHandlers());
+
+// Start the server
+server.listen(port, () => console.log('Alexa skill server started on port 3000.'));
