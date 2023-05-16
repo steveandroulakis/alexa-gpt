@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "temporal g. p. t.",
+            "invocationName": "steve bot",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -29,8 +29,9 @@
                         "how {question}",
                         "why {question}",
                         "tell me {question}",
-                        "give me {question}"
-                    ]
+                        "give me {question}",
+                        "can you {question}",
+                        "give a {question}"                    ]
                 },
                 {
                     "name": "AMAZON.NavigateHomeIntent",
