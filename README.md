@@ -1,3 +1,4 @@
+The plan is to orchestrate API interactions reliably using Temporal.io
 ### Deploy the endpoint
 - Figure out your Open AI key (for GPT access)
 - `npm install`
