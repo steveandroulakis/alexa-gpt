@@ -116,6 +116,20 @@ const StopIntentHandler = {
     }
 };
 
+const anythingHandler = {
+    canHandle(handlerInput: any) {
+        return true;
+    },
+    async handle(handlerInput: any) {
+        const speechText = 'Try again. Begin your question with the words, tell me';
+
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .reprompt(speechText)
+            .getResponse();
+    }
+};
+
 const ErrorHandler = {
     canHandle(handlerInput: HandlerInput, error: Error): boolean {
         return error.name.startsWith('AskSdk');
@@ -133,7 +147,8 @@ const ErrorHandler = {
 skillBuilder.addRequestHandlers(
     ChatGPTIntent,
     StopIntentHandler,
-    LaunchRequestHandler
+    LaunchRequestHandler,
+    anythingHandler
 );
 
 skillBuilder.addErrorHandlers(ErrorHandler);
@@ -149,6 +164,11 @@ const adapter = new ExpressAdapter(skill, true, true);
 // Create an Express server and route incoming requests to the adapter
 const server = express();
 server.post('/', adapter.getRequestHandlers());
+
+// GET request handler for '/'
+server.get('/', (req: any, res: any) => {
+    res.send('Hello World!');
+});
 
 // Start the server
 server.listen(port, () => console.log(`Alexa skill server started on port ${port}.`));
