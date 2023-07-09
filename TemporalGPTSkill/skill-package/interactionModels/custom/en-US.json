@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "steve bot",
+            "invocationName": "bear bot",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
